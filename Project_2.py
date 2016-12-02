@@ -1,5 +1,25 @@
 
 # coding: utf-8
+
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
 # 
 # # DAND Project 2: Investigate a Dataset
 # ## Dat Set: Titanic Passengers List
@@ -11,7 +31,7 @@
 # ## Questions investigated:
 # ### - What factors made people more likely to survive?
 
-# In[1]:
+# In[2]:
 
 import pandas as pd
 import numpy as np
@@ -23,7 +43,7 @@ get_ipython().magic(u'matplotlib inline')
 
 # ### Original Data Frame
 
-# In[2]:
+# In[3]:
 
 filename = 'titanic-data.csv'
 titanic_df = pd.read_csv(filename)
@@ -32,7 +52,7 @@ titanic_df.head(n=5)
 
 # ### Checking for Missing Values and Filling in Missing Instances  (Data Wrangling)
 
-# In[3]:
+# In[24]:
 
 # Show columns with missing values
 print 'Columns with missing values:'
@@ -52,30 +72,42 @@ ref_table = titanic_df.groupby(['Pclass', 'Sex'], as_index=False)['Age_Rounded']
 print ref_table
 
 
+
 # I will fill in the missing age instances given that I will be looking how age affects survival chances. 
 
-# In[11]:
+# In[26]:
 
-def fill_age(age):
-    if np.isnan(age):
-        return 999
-    else:
-        return age
+# Iterating over the Age column and assigning mode values grouped by class and sex (ref_table) to 
+# NaN instances
+
+for index, value in new_age_col.iteritems() :
+    if np.isnan(value):
+        if titanic_df['Pclass'][index] == 1 and titanic_df['Sex'][index] == 'female':
+            new_age_col[index] = 35.0
+        elif titanic_df['Pclass'][index] == 1 and titanic_df['Sex'][index] == 'male':
+            new_age_col[index] = 36.0
+        elif titanic_df['Pclass'][index] == 2 and titanic_df['Sex'][index] == 'female':
+            new_age_col[index] = 24.0
+        elif titanic_df['Pclass'][index] == 2 and titanic_df['Sex'][index] == 'male':
+            new_age_col[index] = 34.0
+        elif titanic_df['Pclass'][index] == 3 and titanic_df['Sex'][index] == 'female':
+            new_age_col[index] = 18.0
+        elif titanic_df['Pclass'][index] == 3 and titanic_df['Sex'][index] == 'male':
+            new_age_col[index] = 20.0
+            
+# Updating the Age column
+
+titanic_df['Age'] = new_age_col
 
 
+# In[23]:
 
 
-# In[10]:
-
-for age in titanic_df['Age']:
-    print titanic_df['Age'].index.get_loc(age)
 
 
 # In[88]:
 
-# Function that fills in the missing age values depensing on gender
-#def fill_age(age_series):
-#
+
 
 
 # ### Latest Data Frame (After Data Wrangling)
